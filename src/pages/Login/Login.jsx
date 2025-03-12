@@ -9,11 +9,17 @@ const Login = () => {
   const[email,setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+    const onSubmitHandler = (event) =>{
+      event.preventDefault();
+      if(currState==="Sign Up"){
+        signup(userName,email,password);
+      }
+    }
 
   return (
     <div className='login'>
       <img src={assets.logo_big} alt="" className="logo" />
-      <form className='login-form'>
+      <form onSubmit={onSubmitHandler} className='login-form'>
         <h2>{currState}</h2>
         {currState === "Sign Up"?<input onChange={(e)=>setUserName(e.target.value)} value={userName} type="text" placeholder="Username" className="form-input" required />:null}
         <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" placeholder="Email address"className="form-input" required/>
