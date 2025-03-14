@@ -27,7 +27,7 @@ uploadTask.on('state_changed',
   () => {
     
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      resolvePath(downloadURL)
+      return(downloadURL)
     });
   }
 );
