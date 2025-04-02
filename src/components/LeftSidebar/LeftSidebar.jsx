@@ -7,23 +7,32 @@ import { db } from "../../config/firebase";
 import { AppContext } from "../../context/AppContext"; // ✅ Import AppContext
 import { toast } from "react-toastify";
 
-function LeftSidebar() {
+const LeftSidebar= ()=> {
   const navigate = useNavigate();
-  const { userData } = useContext(AppContext); // ✅ Correct useContext usage
+  const { userData,chatData} = useContext(AppContext); // ✅ Correct useContext usage
   const [user,setUser] = useState(null);
   const [showSearch,setShowSearch] = useState(false);
 
   const inputHandler = async (e) => {
     try {
-      const input = e.target.value.trim(); // ✅ Trim whitespace
+      const input = e.target.value; // ✅ Trim whitespace
       if (input){
         setShowSearch(true);
       const userRef = collection(db, "users");
-      const q = query(userRef, where("username", "==", input)); // ✅ Use exact case if Firestore data isn't lowercase
+      const q = query(userRef, where("username", "==", input.toLowerCase())); // ✅ Use exact case if Firestore data isn't lowercase
       const querySnap = await getDocs(q);
 
       if (!querySnap.empty && querySnap.docs[0].data().id !== userData.id) {
-        setUser(querySnap.docs[0].data());
+        let userExist = false
+        chatData.map((user)=>{
+          if(user.rId === querySnap.docs[0].data().id){
+            userExist = true;
+          }
+        })
+        if (!userExist){
+             setUser(querySnap.docs[0].data());
+        }
+     
       }else{
         setUser(null);
       }
@@ -36,26 +45,37 @@ function LeftSidebar() {
   };
 
   const addChat = async () => {
-    const messageRef = collection(db,"messages");
+    const messagesRef = collection(db,"messages");
     const chatsRef = collection(db,"chats");
     try{
-      const newMessageRef = doc(messageRef);
+      const newMessageRef = doc(messagesRef);
       await setDoc(newMessageRef,{
         createAt:serverTimestamp(),
         messages:[]
       })
-      await updateDoc(doc(chatsRef,userData.id)),{
+      await updateDoc(doc(chatsRef,user.id),{
         chatsData:arrayUnion({
           messageId: newMessageRef.id,
           lastMessage:"",
-          rId:user.id,
+          rId:userData.id,
           updatedAt:Date.now(),
           messageSeen:true
         })
-      }
+      })
+
+       await updateDoc(doc(chatsRef, userData.id), {
+         chatsData: arrayUnion({
+           messageId: newMessageRef.id,
+           lastMessage: "",
+           rId: user.id,
+           updatedAt: Date.now(),
+           messageSeen: true,
+         }),
+       });
+
     }catch(error){
       toast.error(error.message);
-      console.log(error) 
+      console.error(error) 
     }
   }
 
@@ -89,14 +109,12 @@ function LeftSidebar() {
             <p>{user.name}</p>
           </div>
         ) : (
-          Array(12)
-            .fill("")
-            .map((item, index) => (
+          (chatData || []).map((item, index) => (
               <div key={index} className="friends">
-                <img src={assets.profile_img} alt="" />
+                <img src={item.userData.avatar} alt="" />
                 <div>
-                  <p>Richard Sanford</p>
-                  <span>Hello, How are you?</span>
+                  <p>{item.userData.name}</p>
+                  <span>{item.lastMessage}</span>
                 </div>
               </div>
             ))
