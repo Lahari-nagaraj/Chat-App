@@ -6,6 +6,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
@@ -19,7 +20,7 @@ import { toast } from "react-toastify";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
-  const { userData, chatData, setChatUser, setMessagesId } =
+  const { userData, chatData, setChatUser, setMessagesId ,messagesId} =
     useContext(AppContext);
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
@@ -98,9 +99,17 @@ const LeftSidebar = () => {
     }
   };
 
-  const setChat = (item) => {
+  const setChat =async(item) => {
     setMessagesId(item.messageId);
     setChatUser(item);
+    const userChatsRef = doc(db,"chats",userData.id);
+    const userChatsSnapshot= await getDoc(userChatsRef);
+    const userChatsData = userChatsSnapshot.data();
+    const chatIndex = userChatsData.chatsData.findIndex((c)=>c.messageId === item.messageId);
+    userChatsData.chatsData[chatIndex].messageSeen = true;
+    await updateDoc(userChatsRef,{
+      chatData:userChatsData.chatsData
+    })
   };
 
   return (
@@ -142,7 +151,7 @@ const LeftSidebar = () => {
               <div
                 onClick={() => setChat(item)}
                 key={index}
-                className="friends"
+                className={`friends ${item.messageSeen || item.messageId === messagesId ? "": "border" }`}
               >
                 <img src={item.userData.avatar} alt="" />
                 <div>

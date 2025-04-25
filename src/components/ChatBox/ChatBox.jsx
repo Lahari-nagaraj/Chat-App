@@ -44,7 +44,7 @@ const ChatBox = () => {
               userChatData.chatsData[chatIndex].messageSeen = false;
             }
             await updateDoc(userChatsRef, {
-              chatsData: userChatData.chatsData,
+              chatsData: userChatData.chatsData
             });
           }
         });
@@ -55,7 +55,7 @@ const ChatBox = () => {
     setInput("");
   };
 
-  const sendimage = async (e) => {
+  const sendImage = async (e) => {
     try {
       const fileUrl = await upload(e.target.files[0]);
       if (fileUrl && messagesId) {
@@ -92,6 +92,7 @@ const ChatBox = () => {
     } catch (error) {
       toast.error(error.message);
     }
+  
   };
 
   const convertTimestamp = (timestamp) => {
@@ -109,6 +110,7 @@ const ChatBox = () => {
     if (messagesId) {
       const unSub = onSnapshot(doc(db, "messages", messagesId), (res) => {
         setMessages(res.data().messages.reverse());
+        console.log(res.data().messages.reverse());
       });
       return () => {
         unSub();
@@ -133,7 +135,9 @@ const ChatBox = () => {
             key={index}
             className={msg.sId === userData.id ? "s-msg" : "r-msg"}
           >
-            <p className="msg">{msg.text}</p>
+            {msg["image"]?<img className="msg-img" src={msg.image} alt=""/>
+            : <p className="msg">{msg.text}</p>}
+           
             <div className="">
               <img
                 src={
@@ -157,11 +161,11 @@ const ChatBox = () => {
           placeholder="Send a message"
         />
         <input
-          onChange={sendimage}
+          onChange={sendImage}
           type="file"
           id="image"
-          accept="image/png, image/jpg"
-          hidden
+          accept="image/png, image/jpeg"
+        hidden
         />
         <label htmlFor="image">
           <img src={assets.gallery_icon} alt="" />
@@ -176,5 +180,24 @@ const ChatBox = () => {
     </div>
   );
 };
-
 export default ChatBox;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
