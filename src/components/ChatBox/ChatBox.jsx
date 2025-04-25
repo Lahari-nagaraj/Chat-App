@@ -124,7 +124,8 @@ const ChatBox = () => {
         <img src={chatUser.userData.avatar} alt="" />
         <p>
           {chatUser.userData.name}
-          <img className="dot" src={assets.green_dot} alt="" />
+          
+          {Date.now()-chatUser.userData.lastSeen <= 70000 ? <img className="dot" src={assets.green_dot} alt="" />:null}
         </p>
         <img src={assets.help_icon} className="help" alt="" />
       </div>
