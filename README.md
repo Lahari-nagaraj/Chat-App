@@ -13,19 +13,20 @@ Users can create an account or log in using just their email and password—no p
 
 * Secure and encrypted user sessions.
 
-<img src="https://your-image-url/image1-signin.png" alt="Sign In Page" width="100%" />
+![signin](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124711.png?raw=true)
+
 
 
 🔑 Login Page
 A clean and user-friendly login page powered by Firebase.
 
-<img src="https://your-image-url/image2-login.png" alt="Login Page" width="100%" />
+![login](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124809.png?raw=true)
 
 
 👤 User Profile
 Users can set or update their username, tagline, and profile picture directly from the app.
 
-<img src="https://your-image-url/image3-userprofilepage.png" alt="User Profile Page" width="100%" />
+![user_profile](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124623.png?raw=true)
 
 
 🧭 Left Sidebar – User List
@@ -38,7 +39,8 @@ Image sharing (via Firebase Storage)
 Online status display next to usernames
 Messages appear instantly without page reload thanks
 
-<img src="https://your-image-url/image4-chatbox.png" alt="Chat Interface" width="100%" />
+
+![chatbox1](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124623.png?raw=true)
 
 
 🖼 Right Sidebar – Media and Logout
@@ -46,7 +48,7 @@ Displays all images shared in the chat
 Shows current logged-in user’s name and profile
 Includes a logout button
 
-<img src="https://your-image-url/image5-chatbox2.png" alt="Media Sidebar" width="100%" />
+![chatbox2](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124937.png?raw=true)
 
 
 🛠 Tech Stack
