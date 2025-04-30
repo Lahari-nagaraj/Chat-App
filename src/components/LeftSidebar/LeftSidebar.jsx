@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
-  const { userData, chatData, setChatUser, setMessagesId ,messagesId,chatVisible,setChatVisible} =
+  const { userData, chatData, chatUser,setChatUser, setMessagesId ,messagesId,chatVisible,setChatVisible} =
     useContext(AppContext);
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
@@ -136,7 +136,7 @@ const LeftSidebar = () => {
   useEffect(()=>{
     const updateChatUserData = async () => {
       if(chatUser){
-        const userRef = doc(db,"users,chatUser.userData.id");
+        const userRef = doc(db,"users",chatUser.userData.id);
         const userSnap = await getDoc(userRef);
         const userData = userSnap.data();
         setChatUser(prev=>({...prev,userData:userData}))
