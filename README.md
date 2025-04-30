@@ -26,7 +26,7 @@ A clean and user-friendly login page powered by Firebase.
 👤 User Profile
 Users can set or update their username, tagline, and profile picture directly from the app.
 
-![user_profile](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20124623.png?raw=true)
+![user_profile](https://github.com/Lahari-nagaraj/Chat-App/blob/main/Screenshot%202025-04-30%20181241.png?raw=true)
 
 
 🧭 Left Sidebar – User List
